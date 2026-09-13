@@ -1,0 +1,27 @@
+<div class="container mt-5" *ngIf="recipeData; else noData">
+  <h2>{{ recipeData.title }}</h2>
+  <p><strong>Chef:</strong> {{ recipeData.chef }}</p>
+  <p><strong>Meal Type:</strong> {{ recipeData.mealType }}</p>
+  <p><strong>Cuisine Type:</strong> {{ recipeData.cuisineType }}</p>
+  <p><strong>Prep Time:</strong> {{ recipeData.prepTime }} minutes</p>
+  <p><strong>Difficulty:</strong> {{ recipeData.difficulty }}</p>
+  <p><strong>Servings:</strong> {{ recipeData.servings }}</p>
+
+  <h4>Ingredients</h4>
+  <ul>
+    <li *ngFor="let i of (recipeData.ingredients?.split(',') || [])">
+      {{ i.trim() }}
+    </li>
+  </ul>
+
+  <h4>Instructions</h4>
+  <ol>
+    <li *ngFor="let step of (recipeData.instructions?.split('.') || [])">
+      {{ step.trim() }}
+    </li>
+  </ol>
+</div>
+
+<ng-template #noData>
+  <div class="alert alert-warning mt-5">No recipe details available.</div>
+</ng-template>

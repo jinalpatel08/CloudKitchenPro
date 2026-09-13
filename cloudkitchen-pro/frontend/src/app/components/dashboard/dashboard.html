@@ -1,0 +1,45 @@
+<div class="container mt-5">
+  <h2>Dashboard</h2>
+
+  <!-- show message if something goes wrong -->
+  <div *ngIf="message" class="alert alert-danger">{{ message }}</div>
+
+  <!-- dashboard content -->
+  <div *ngIf="!message">
+    <h5>Welcome, {{ fullname || 'User' }}!</h5>
+    <p class="mb-1">Role: {{ role || 'Chef' }}</p>
+    <p>Email: {{ user?.email || 'user@email.com' }}</p>
+
+    <!-- dashboard stats -->
+    <div class="row mt-4">
+      <div class="col-md-4 mb-3">
+        <div class="card text-center shadow-sm p-3">
+          <h4>Total Users</h4>
+          <h2>{{ totalUsers }}</h2>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <div class="card text-center shadow-sm p-3">
+          <h4>Total Recipes</h4>
+          <h2>{{ totalRecipes }}</h2>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <div class="card text-center shadow-sm p-3">
+          <h4>Total Inventory Items</h4>
+          <h2>{{ totalInventory }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- navigation buttons -->
+    <div class="text-center mt-4">
+      <button class="btn btn-primary me-2" (click)="goTo('/recipes')">View Recipes</button>
+      <button class="btn btn-success me-2" (click)="goTo('/add-recipe')">Add Recipe</button>
+      <button class="btn btn-info text-white me-2" (click)="goTo('/inventory')">View Inventory</button>
+      <button class="btn btn-warning" (click)="goTo('/add-inventory')">Add Inventory</button>
+    </div>
+  </div>
+</div>

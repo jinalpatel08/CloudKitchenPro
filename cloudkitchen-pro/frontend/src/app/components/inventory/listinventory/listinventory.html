@@ -1,0 +1,123 @@
+<div class="container mt-5">
+  <div class="d-flex align-items-center justify-content-between">
+    <h2>Inventory</h2>
+    <button class="btn btn-primary" routerLink="/add-inventory">Add Item</button>
+  </div>
+
+  <div *ngIf="message()" class="alert alert-danger mt-3">{{ message() }}</div>
+
+    <!-- Filters -->
+    <div class="row g-2 mt-3">
+    <div class="col-12 col-md-4">
+        <input
+        class="form-control"
+        placeholder="Search ingredient..."
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+        />
+    </div>
+
+    <div class="col-6 col-md-3">
+        <select
+        class="form-select"
+        [ngModel]="category()"
+        (ngModelChange)="category.set($event)"
+        >
+        <option value="">All Categories</option>
+        <option>Vegetables</option>
+        <option>Fruits</option>
+        <option>Meat</option>
+        <option>Dairy</option>
+        <option>Grains</option>
+        <option>Spices</option>
+        <option>Beverages</option>
+        <option>Frozen</option>
+        <option>Canned</option>
+        <option>Other</option>
+        </select>
+    </div>
+
+    <div class="col-6 col-md-3">
+        <select
+        class="form-select"
+        [ngModel]="location()"
+        (ngModelChange)="location.set($event)"
+        >
+        <option value="">All Locations</option>
+        <option>Fridge</option>
+        <option>Freezer</option>
+        <option>Pantry</option>
+        <option>Counter</option>
+        <option>Cupboard</option>
+        </select>
+    </div>
+
+    <div class="col-12 col-md-2">
+        <select
+        class="form-select"
+        [ngModel]="sortBy()"
+        (ngModelChange)="sortBy.set($event)"
+        >
+        <option value="">Sort By</option>
+        <option value="expirationDate">Soonest Expiry</option>
+        <option value="quantity">Quantity (low→high)</option>
+        <option value="createdDate">Newest</option>
+        </select>
+    </div>
+    </div>
+
+  <!-- Total value -->
+  <div class="alert alert-info mt-3">
+    <strong>Total value:</strong> {{ totalValue() | number: '1.2-2' }}
+  </div>
+
+  <!-- Table -->
+  <table class="table table-striped table-bordered mt-2" *ngIf="filtered().length; else empty">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Qty</th>
+        <th>Unit</th>
+        <th>Category</th>
+        <th>Location</th>
+        <th>Purchased</th>
+        <th>Expires</th>
+        <th>Cost</th>
+        <th>Value</th>
+        <th>Flags</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let it of filtered()"
+          [class.table-danger]="isExpired(it)"
+          [class.table-warning]="!isExpired(it) && isNearExpiry(it)">
+        <td>{{ it.inventoryId }}</td>
+        <td>{{ it.ingredientName }}</td>
+        <td>{{ it.quantity }}</td>
+        <td>{{ it.unit }}</td>
+        <td>{{ it.category }}</td>
+        <td>{{ it.location }}</td>
+        <td>{{ it.purchaseDate | date: 'yyyy-MM-dd' }}</td>
+        <td>{{ it.expirationDate | date: 'yyyy-MM-dd' }}</td>
+        <td>{{ it.cost | number: '1.2-2' }}</td>
+        <td>{{ (it.quantity * it.cost) | number: '1.2-2' }}</td>
+        <td>
+          <span *ngIf="isLowStock(it)" class="badge bg-danger me-1">Low</span>
+          <span *ngIf="isExpired(it)" class="badge bg-dark me-1">Expired</span>
+          <span *ngIf="!isExpired(it) && isNearExpiry(it)" class="badge bg-warning text-dark">Expiring</span>
+        </td>
+        <td>
+          <button class="btn btn-info btn-sm me-1" (click)="view(it.inventoryId)">View</button>
+          <button class="btn btn-warning btn-sm me-1" (click)="edit(it.inventoryId)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="delete(it.inventoryId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #empty>
+    <div class="alert alert-secondary mt-3">No items found.</div>
+  </ng-template>
+</div>

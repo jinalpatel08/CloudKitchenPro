@@ -1,0 +1,126 @@
+<div class="container mt-5">
+  <h2>Edit Inventory Item</h2>
+
+  <div *ngIf="message" class="alert alert-info">{{ message }}</div>
+
+  <form (ngSubmit)="update()">
+    <div class="mb-3">
+      <label class="form-label">Ingredient Name</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="inventoryData.ingredientName"
+        name="ingredientName"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Quantity</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="inventoryData.quantity"
+        name="quantity"
+        min="1"
+        max="9999"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Unit</label>
+      <select
+        class="form-select"
+        [(ngModel)]="inventoryData.unit"
+        name="unit"
+        required
+      >
+        <option value="pieces">Pieces</option>
+        <option value="kg">Kilograms</option>
+        <option value="g">Grams</option>
+        <option value="liters">Liters</option>
+        <option value="ml">Milliliters</option>
+        <option value="cups">Cups</option>
+        <option value="tbsp">Tablespoons</option>
+        <option value="tsp">Teaspoons</option>
+        <option value="dozen">Dozen</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Category</label>
+      <select
+        class="form-select"
+        [(ngModel)]="inventoryData.category"
+        name="category"
+        required
+      >
+        <option value="Vegetables">Vegetables</option>
+        <option value="Fruits">Fruits</option>
+        <option value="Meat">Meat</option>
+        <option value="Dairy">Dairy</option>
+        <option value="Grains">Grains</option>
+        <option value="Spices">Spices</option>
+        <option value="Beverages">Beverages</option>
+        <option value="Frozen">Frozen</option>
+        <option value="Canned">Canned</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Purchase Date</label>
+      <input
+        type="date"
+        class="form-control"
+        [(ngModel)]="inventoryData.purchaseDate"
+        name="purchaseDate"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Expiration Date</label>
+      <input
+        type="date"
+        class="form-control"
+        [(ngModel)]="inventoryData.expirationDate"
+        name="expirationDate"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Location</label>
+      <select
+        class="form-select"
+        [(ngModel)]="inventoryData.location"
+        name="location"
+        required
+      >
+        <option value="Fridge">Fridge</option>
+        <option value="Freezer">Freezer</option>
+        <option value="Pantry">Pantry</option>
+        <option value="Counter">Counter</option>
+        <option value="Cupboard">Cupboard</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Cost ($)</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="inventoryData.cost"
+        name="cost"
+        step="0.01"
+        min="0.01"
+        max="999.99"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Item</button>
+  </form>
+</div>

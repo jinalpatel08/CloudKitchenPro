@@ -1,0 +1,42 @@
+<div class="container mt-5">
+  <h2>All Recipes</h2>
+
+  <div *ngIf="message()" class="alert alert-danger">{{ message() }}</div>
+
+  <table class="table table-striped mt-4" *ngIf="recipes.length > 0; else noRecipes">
+    <thead class="table-dark">
+      <tr>
+        <th>Title</th>
+        <th>Chef</th>
+        <th>Meal Type</th>
+        <th>Cuisine</th>
+        <th>Prep Time</th>
+        <th>Difficulty</th>
+        <th>Servings</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of recipes">
+        <td>{{ r.title }}</td>
+        <td>{{ r.chef }}</td>
+        <td>{{ r.mealType }}</td>
+        <td>{{ r.cuisineType }}</td>
+        <td>{{ r.prepTime }} mins</td>
+        <td>{{ r.difficulty }}</td>
+        <td>{{ r.servings }}</td>
+        <td>
+          <button class="btn btn-info btn-sm me-2" (click)="viewRecipe(r.recipeId)">View</button>
+          <button class="btn btn-warning btn-sm me-2" (click)="editRecipe(r.recipeId)">Edit</button>
+          <button class="btn btn-danger btn-sm me-2" (click)="deleteRecipe(r.recipeId)">Delete</button>
+          <button class="btn btn-success btn-sm me-2" (click)="analyseHealth(r.recipeId)">Analyse Health</button>
+          <button class="btn btn-primary btn-sm" (click)="translateRecipe(r.recipeId)">Translate</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noRecipes>
+    <div class="alert alert-secondary mt-4">No recipes found.</div>
+  </ng-template>
+</div>

@@ -1,0 +1,38 @@
+<div *ngIf="recipe; else loadingOrError" class="container mt-5">
+  <h2>{{ recipe.title }}</h2>
+
+  <div class="mt-3">
+    <label for="langSelect"><strong>Select Language:</strong></label>
+    <select id="langSelect" class="form-select w-auto d-inline-block ms-2" [(ngModel)]="selectedLang">
+      <option value="">-- Choose --</option>
+      <option value="es">Spanish</option>
+      <option value="hi">Hindi</option>
+      <option value="gu">Gujarati</option>
+    </select>
+
+    <button class="btn btn-primary ms-3" (click)="onTranslateClick()" [disabled]="loading">
+      Translate
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="alert alert-info mt-3">Translating...</div>
+
+  <div *ngIf="translatedData" class="card mt-3 border-success">
+    <div class="card-header bg-success text-white">
+      Translated Recipe ({{ selectedLang.toUpperCase() }})
+    </div>
+    <div class="card-body">
+      <h5>{{ translatedData.translatedTitle }}</h5>
+      <p><strong>Ingredients:</strong> {{ translatedData.translatedIngredients }}</p>
+      <p><strong>Instructions:</strong></p>
+      <p>{{ translatedData.translatedInstructions }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+</div>
+
+<ng-template #loadingOrError>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  <div *ngIf="!error" class="alert alert-secondary">Loading recipe...</div>
+</ng-template>

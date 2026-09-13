@@ -1,0 +1,15 @@
+<div class="container mt-5" *ngIf="item; else noData">
+  <h2>{{ item.ingredientName }}</h2>
+  <p><strong>ID:</strong> {{ item.inventoryId }}</p>
+  <p><strong>Quantity:</strong> {{ item.quantity }} {{ item.unit }}</p>
+  <p><strong>Category:</strong> {{ item.category }}</p>
+  <p><strong>Location:</strong> {{ item.location }}</p>
+  <p><strong>Purchased:</strong> {{ item.purchaseDate | date:'yyyy-MM-dd' }}</p>
+  <p><strong>Expires:</strong> {{ item.expirationDate | date:'yyyy-MM-dd' }}</p>
+  <p><strong>Cost per unit:</strong> {{ item.cost | number:'1.2-2' }}</p>
+  <p><strong>Value:</strong> {{ (item.quantity * item.cost) | number:'1.2-2' }}</p>
+</div>
+
+<ng-template #noData>
+  <div class="alert alert-warning mt-5">Item not found.</div>
+</ng-template>
